@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tony's Pizza</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Tony's Pizza</h1>
+    <p class="cart-badge">Cart <span data-testid="cart-count">0</span></p>
+  </header>
+
+  <main>
+    <section id="menu-view" class="layout">
+      <div>
+        <p id="special" class="special" hidden></p>
+        <h2>Menu</h2>
+        <p id="menu-status" role="status">Loading menu...</p>
+        <ul id="menu-list" class="menu"></ul>
+      </div>
+
+      <aside class="cart">
+        <h2>Your order</h2>
+        <p id="cart-empty">Your cart is empty.</p>
+        <ul id="cart-list" class="cart-list"></ul>
+        <p class="total">Total: <strong data-testid="cart-total">$0</strong></p>
+        <button id="checkout-button" class="primary" disabled>Checkout</button>
+      </aside>
+    </section>
+
+    <section id="checkout-view" class="panel" hidden>
+      <h2>Checkout</h2>
+      <form id="checkout-form">
+        <label for="name">Name</label>
+        <input id="name" name="name" autocomplete="name">
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+
+        <button type="submit" class="primary">Place order</button>
+        <button type="button" id="back-button">Back to menu</button>
+      </form>
+    </section>
+
+    <section id="confirmation-view" class="panel" hidden>
+      <h2>Order confirmed</h2>
+      <p id="confirmation-message"></p>
+      <button type="button" id="new-order-button">Start a new order</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

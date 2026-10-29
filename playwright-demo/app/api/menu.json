@@ -1,0 +1,9 @@
+{
+  "special": { "name": "Spicy Honey Pepperoni", "price": 18 },
+  "pizzas": [
+    { "name": "Margherita", "description": "Tomato, mozzarella, basil", "price": 12 },
+    { "name": "Pepperoni", "description": "Tomato, mozzarella, pepperoni", "price": 13 },
+    { "name": "Veggie Garden", "description": "Peppers, mushrooms, olives, onion", "price": 13 },
+    { "name": "BBQ Chicken", "description": "BBQ sauce, chicken, red onion", "price": 14 }
+  ]
+}

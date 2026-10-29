@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Track my order (design mockup)</title>
+  <!-- DESIGN MOCKUP: static HTML for a proposal. Not wired to any real data yet. -->
+  <style>
+    :root {
+      --tomato: #c8341c;
+      --basil: #2f7d4a;
+      --bg: #fff8ef;
+      --card: #ffffff;
+      --ink: #2b1d14;
+      --muted: #6f5b4c;
+      --line: #ecdccb;
+      --map: #f3e7d8;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1b1410;
+        --card: #261c16;
+        --ink: #f8ede3;
+        --muted: #c4ad9b;
+        --line: #3d2e24;
+        --map: #2f241d;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: var(--tomato);
+      color: #fff;
+    }
+
+    header h1 { margin: 0; font-size: 1.6rem; }
+    .mockup-tag {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+    }
+
+    .card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+    }
+
+    .eta { font-size: 3rem; font-weight: 800; margin: 4px 0; color: var(--tomato); }
+    .eta-label { margin: 0; color: var(--muted); font-weight: 600; }
+
+    ol.steps { list-style: none; margin: 24px 0 0; padding: 0; }
+
+    ol.steps li {
+      position: relative;
+      padding: 0 0 22px 40px;
+      color: var(--muted);
+    }
+
+    ol.steps li::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 18px;
+      height: 18px;
+      border: 3px solid var(--line);
+      border-radius: 50%;
+      background: var(--card);
+    }
+
+    ol.steps li::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 26px;
+      bottom: 2px;
+      width: 2px;
+      background: var(--line);
+    }
+
+    ol.steps li:last-child::after { display: none; }
+    ol.steps li.done, ol.steps li.current { color: var(--ink); font-weight: 600; }
+    ol.steps li.done::before { border-color: var(--basil); background: var(--basil); }
+    ol.steps li.current::before { border-color: var(--tomato); background: var(--tomato); box-shadow: 0 0 0 6px rgba(200, 52, 28, 0.2); }
+    ol.steps small { display: block; font-weight: 400; color: var(--muted); }
+
+    .map {
+      position: relative;
+      height: 260px;
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, transparent 48%, var(--line) 48%, var(--line) 52%, transparent 52%),
+        linear-gradient(0deg, transparent 58%, var(--line) 58%, var(--line) 62%, transparent 62%),
+        var(--map);
+      overflow: hidden;
+    }
+
+    .route {
+      position: absolute;
+      left: 12%;
+      top: 22%;
+      width: 64%;
+      height: 50%;
+      border: 4px dashed var(--tomato);
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0 40px 0 0;
+    }
+
+    .pin, .scooter {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      color: #fff;
+    }
+
+    .pin { right: 18%; bottom: 20%; background: var(--basil); }
+    .scooter { left: 44%; top: 14%; background: var(--tomato); box-shadow: 0 0 0 8px rgba(200, 52, 28, 0.25); }
+
+    .driver { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--basil);
+      color: #fff;
+      font-weight: 700;
+    }
+    .driver p { margin: 0; }
+    .driver small { color: var(--muted); }
+
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
+    .actions button {
+      font: inherit;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: var(--card);
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .actions button.primary { background: var(--tomato); border-color: var(--tomato); color: #fff; }
+
+    .order-summary { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+    .order-summary p { display: flex; justify-content: space-between; margin: 6px 0; }
+
+    @media (max-width: 720px) {
+      header { padding: 12px 16px; }
+      main { grid-template-columns: 1fr; padding: 16px; }
+      .eta { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Tony's Pizza</h1>
+    <span class="mockup-tag">DESIGN MOCKUP</span>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="track-heading">
+      <h2 id="track-heading">Track my order</h2>
+      <p class="eta-label">Arriving in</p>
+      <p class="eta">18 min</p>
+      <p class="eta-label">Order #1001 · 2 pizzas</p>
+
+      <ol class="steps" aria-label="Order progress">
+        <li class="done">Order placed <small>7:02 pm</small></li>
+        <li class="done">In the oven <small>7:06 pm</small></li>
+        <li class="current">Out for delivery <small>Marco is on the way</small></li>
+        <li>Delivered <small>About 7:40 pm</small></li>
+      </ol>
+    </section>
+
+    <section class="card" aria-label="Delivery map">
+      <div class="map" role="img" aria-label="Map showing the driver on the way">
+        <div class="route"></div>
+        <div class="scooter" aria-hidden="true">&#x1F6F5;</div>
+        <div class="pin" aria-hidden="true">&#x1F3E0;</div>
+      </div>
+
+      <div class="driver">
+        <div class="avatar" aria-hidden="true">M</div>
+        <div>
+          <p><strong>Marco</strong></p>
+          <small>Red scooter · 4.9 rating</small>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="primary">Call Marco</button>
+        <button type="button">Need help?</button>
+      </div>
+
+      <div class="order-summary">
+        <p><span>Margherita</span><span>$12</span></p>
+        <p><span>Pepperoni</span><span>$13</span></p>
+        <p><strong>Total</strong><strong>$25</strong></p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
