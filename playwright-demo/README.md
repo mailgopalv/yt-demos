@@ -56,7 +56,10 @@ then open the Testing panel (the beaker icon) to run, debug and record tests.
 
 ## Playwright MCP
 
-`.vscode/mcp.json` registers the Playwright MCP server:
+The repo registers the Playwright MCP server twice, once per AI tool. Same
+server, same command.
+
+**GitHub Copilot** reads `.vscode/mcp.json`:
 
 ```json
 {
@@ -69,9 +72,25 @@ then open the Testing panel (the beaker icon) to run, debug and record tests.
 }
 ```
 
-Open this folder in VS Code and start the server from the MCP servers list (or
-the Start link above the server in `mcp.json`). Then ask your AI agent
-(Claude Code in VS Code, or GitHub Copilot agent mode) things like:
+**Claude Code** reads `.mcp.json` at the project root:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+On Windows, Claude Code runs `npx` through `cmd /c`. On macOS or Linux, use
+`"command": "npx"` and `"args": ["@playwright/mcp@latest"]`.
+
+Open this folder in VS Code and click **Start** above the server in the file
+(or approve it when Claude Code asks). Then ask your AI agent things like:
 
 ```text
 Use the Playwright MCP to open http://localhost:3000/design/track-order.html.
@@ -85,6 +104,9 @@ Then write a Playwright test in tests/two-pizzas.spec.ts that orders a
 Margherita and a Pepperoni, checks the cart shows 2, and checks the order
 is confirmed. Use getByRole and getByLabel locators.
 ```
+
+The test Claude Code wrote in the video is in `solutions/two-pizzas.spec.ts`,
+so you can compare it with what your AI writes.
 
 Run `npm start` first so the app is up at http://localhost:3000.
 
